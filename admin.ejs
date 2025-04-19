@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .admin-panel {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            width: 600px;
+            max-width: 100%;
+        }
+        .admin-panel h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .admin-panel form {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 30px;
+        }
+        .admin-panel input {
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .admin-panel button {
+            padding: 10px;
+            background-color: #5c6bc0;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .admin-panel button:hover {
+            background-color: #3f51b5;
+        }
+        .key-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .key-list li {
+            background-color: #f9f9f9;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .key-list button {
+            background-color: #e57373;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        .key-list button:hover {
+            background-color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-panel">
+        <h1>Admin Dashboard</h1>
+        
+        <!-- Create Key Form -->
+        <form action="/admin/create-key" method="POST">
+            <h3>Create a New Key</h3>
+            <input type="text" name="key" placeholder="Enter Key" required>
+            <input type="number" name="expiresIn" placeholder="Expiration Time (seconds)" required>
+            <button type="submit">Create Key</button>
+        </form>
+
+        <!-- List of Keys -->
+        <h3>Existing Keys</h3>
+        <ul class="key-list">
+            <% keys.forEach(function(key) { %>
+                <li>
+                    <span><strong>Key:</strong> <%= key.key %> - <strong>Expires In:</strong> <%= key.expiresIn %> seconds</span>
+                    <form action="/admin/delete-key" method="POST" style="display:inline;">
+                        <input type="hidden" name="key" value="<%= key.key %>">
+                        <button type="submit">Delete</button>
+                    </form>
+                </li>
+            <% }); %>
+        </ul>
+    </div>
+</body>
+</html>
